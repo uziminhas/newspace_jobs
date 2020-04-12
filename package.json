@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@material-ui/core": "^4.0.0-rc.0",
+    "cron": "^1.8.2",
+    "node-fetch": "^2.6.0"
+  },
+  "name": "newspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
