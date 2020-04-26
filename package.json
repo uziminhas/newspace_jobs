@@ -2,7 +2,8 @@
   "dependencies": {
     "@material-ui/core": "^4.0.0-rc.0",
     "cron": "^1.8.2",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "redis": "^3.0.2"
   },
   "name": "newspace",
   "version": "1.0.0",
