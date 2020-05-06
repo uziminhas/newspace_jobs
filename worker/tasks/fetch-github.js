@@ -8,7 +8,6 @@ const redis = require("redis");
 const client = redis.createClient();
 
 const { promisify } = require("util");
-//const getAsync = promisify(client.get).bind(client);
 const setAsync = promisify(client.set).bind(client);
 
 
@@ -62,7 +61,7 @@ async function fetchGitHub() {
 		//let isJunior = true; // default case
 
 		// algo logic
-		// we could also search through the job description
+		// we could also search through the job description to look for: YoE, other filters
 		if(
 			jobTitle.includes('senior') ||
 			jobTitle.includes('manager') ||
