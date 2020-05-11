@@ -11,7 +11,9 @@ const getAsync = promisify(client.get).bind(client);
 // Converted to an asynch function
 app.get('/jobs', async (req, res) => {
 
-	const jobs = await getAsync('github'); // Keyword for getter function
+	//const jobs = await getAsync('github'); // Keyword for getter function
+	const jobs = await getAsync('space'); // Keyword for getter function
+
 	//console.log(JSON.parse(jobs).length); // We originally stringified. Parse and get length to return list length
 	console.log(jobs); // See if we get the original stringified object list
 
