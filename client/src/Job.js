@@ -17,6 +17,7 @@ export default function Job({job, onClick}) {
 			</div>
 			<div>
 				<Typography>{job.created_at.split(' ').slice(0,3).join(' ')}</Typography>
+				<img className={'detail-logo'} src={job.company_logo} />
 
 			</div>
 
