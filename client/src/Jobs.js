@@ -17,11 +17,15 @@ Render styling
 
 export default function Jobs({jobs}) {
 
+	const [filter, setFilter] = React.useState("");
+
 	// modal
 	const [open, setOpen] = React.useState(false);
 	// Sets selected job to whatever job we click
 	// Selected job will be passed into JobModal
 	const [selectedJob, selectJob] = React.useState({}); // starting out it will be an empty object, default state
+
+
 	const handleClickOpen = () => {
 	   setOpen(true);
 	};
@@ -32,7 +36,9 @@ export default function Jobs({jobs}) {
 	// pagination
 	const numJobs = jobs.length;
 	const numPages = Math.ceil(numJobs / 50);
+
 	// This is a view state, so it goes in Jobs.js, NOT the App file
+	// useState declares a new state variable called 'activeStep'
 	const [activeStep, setActiveStep] = React.useState(0);
 	const jobsOnPage = jobs.slice(activeStep * 50, (activeStep * 50 + 50))
 
@@ -42,14 +48,69 @@ export default function Jobs({jobs}) {
 
 	const handleNext = () => {
 	    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	    window.scrollTo({
+	      top: 0,
+	      left: 0,
+	      behavior: 'smooth'
+	    });	
 	};
 
 	const handleBack = () => {
 	    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+		window.scrollTo({
+	      top: 0,
+	      left: 0,
+	      behavior: 'smooth'
+	    });
 	};
 
 	// Log out what a single job looks like
 	console.log('job is', jobs[0]);
+
+	console.log('filter is', filter);
+
+
+	// Create filter for job searching
+	// const handleChange = event => {
+	// 	console.log("Event " + event.target.value)
+	// 	this.setState({ filter: event.target.value });
+	// };
+
+	// const checkIncludesFilter = (item) => {
+	// 	for(var key in item) {
+	// 		if(key == null) {
+	// 			return false;
+	// 		}
+	// 		else {
+	// 			return item[key].toLowerCase().includes(lowercasedFilter)				
+	// 		}
+	// 	}
+	// };
+		
+
+	// Handle filtering
+	// jobs is our JSON array
+	var lowercasedFilter = filter;
+	if(lowercasedFilter != null) {
+		lowercasedFilter = filter.toLowerCase();
+	}
+	// const lowercasedFilter = filter.toLowerCase();
+	const filteredData = jobs.filter(item => {
+		return Object.keys(item).some(key => {
+			if(item[key] != null) {
+				console.log("Item key is " + item[key])
+				console.log("lower filter is" + lowercasedFilter)
+				console.log(item[key].toLowerCase().includes(lowercasedFilter))
+				return item[key].toLowerCase().includes(lowercasedFilter)
+			}}
+		);
+	});
+
+	// const filteredData = jobs.filter(item => {
+	// 	return Object.keys(item).some(checkIncludesFilter(item));
+	// });
+
+
 
 	// On click, we want to push that job into the modal state
 
@@ -60,6 +121,16 @@ export default function Jobs({jobs}) {
 			<Typography variant="h3" component="h1">
 				Commercial space jobs
 			</Typography>
+			<div>
+				<input value={filter} onChange={event => setFilter(event.target.value)} />
+				{filteredData.map(item => (
+					<div key={item.title}>
+						<div>
+							{item.company} {item.location} - {item.created_at} {item.title}
+						</div>
+					</div>
+				))}
+			</div>
 			<Typography variant="h6" component="h2">
 				Found {numJobs} jobs
 			</Typography>
