@@ -19,6 +19,38 @@ export default function Jobs({jobs}) {
 
 	const [filter, setFilter] = React.useState("");
 
+	// Handle filtering
+	// jobs is our JSON array
+	var lowercasedFilter = filter;
+	if(lowercasedFilter != null) {
+		lowercasedFilter = filter.toLowerCase();
+	}
+	// const lowercasedFilter = filter.toLowerCase();
+	const filteredData = jobs.filter(item => {
+		return Object.keys(item).some(key => {
+			if(item[key] != null) {
+				// console.log("Item key is " + item[key])
+				// console.log("lower filter is" + lowercasedFilter)
+				// console.log(item[key].toLowerCase().includes(lowercasedFilter))
+				return item[key].toLowerCase().includes(lowercasedFilter)
+			}}
+		);
+	});
+
+	const filteredJobs = jobs.filter(item => {
+		return Object.keys(item).some(key => {
+			if(item[key] != null) {
+				// console.log("Item key is " + item[key])
+				// console.log("lower filter is" + lowercasedFilter)
+				// console.log(item[key].toLowerCase().includes(lowercasedFilter))
+				return item[key].toLowerCase().includes(lowercasedFilter)
+			}}
+		);
+	});
+
+	console.log("Filtered data is ", filteredData);
+	console.log("Jobs on page are", filteredJobs);
+
 	// modal
 	const [open, setOpen] = React.useState(false);
 	// Sets selected job to whatever job we click
@@ -40,7 +72,8 @@ export default function Jobs({jobs}) {
 	// This is a view state, so it goes in Jobs.js, NOT the App file
 	// useState declares a new state variable called 'activeStep'
 	const [activeStep, setActiveStep] = React.useState(0);
-	const jobsOnPage = jobs.slice(activeStep * 50, (activeStep * 50 + 50))
+	// const jobsOnPage = jobs.slice(activeStep * 50, (activeStep * 50 + 50))
+	const filteredJobsOnPage = filteredJobs.slice(activeStep * 50, (activeStep * 50 + 50))
 
 
 	// step == 0, show 0-49
@@ -86,25 +119,9 @@ export default function Jobs({jobs}) {
 	// 		}
 	// 	}
 	// };
-		
 
-	// Handle filtering
-	// jobs is our JSON array
-	var lowercasedFilter = filter;
-	if(lowercasedFilter != null) {
-		lowercasedFilter = filter.toLowerCase();
-	}
-	// const lowercasedFilter = filter.toLowerCase();
-	const filteredData = jobs.filter(item => {
-		return Object.keys(item).some(key => {
-			if(item[key] != null) {
-				console.log("Item key is " + item[key])
-				console.log("lower filter is" + lowercasedFilter)
-				console.log(item[key].toLowerCase().includes(lowercasedFilter))
-				return item[key].toLowerCase().includes(lowercasedFilter)
-			}}
-		);
-	});
+	
+
 
 	// const filteredData = jobs.filter(item => {
 	// 	return Object.keys(item).some(checkIncludesFilter(item));
@@ -123,19 +140,12 @@ export default function Jobs({jobs}) {
 			</Typography>
 			<div>
 				<input value={filter} onChange={event => setFilter(event.target.value)} />
-				{filteredData.map(item => (
-					<div key={item.title}>
-						<div>
-							{item.company} {item.location} - {item.created_at} {item.title}
-						</div>
-					</div>
-				))}
 			</div>
 			<Typography variant="h6" component="h2">
 				Found {numJobs} jobs
 			</Typography>
 			{
-				jobsOnPage.map(
+				filteredJobsOnPage.map(
 					(job, i) => <Job key={i} job={job} onClick={() => {
 						console.log('clicked')
 						handleClickOpen();
