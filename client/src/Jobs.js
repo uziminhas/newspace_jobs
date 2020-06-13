@@ -17,41 +17,29 @@ Render styling
 
 export default function Jobs({jobs}) {
 
+	// Declares new state variable for 'filter' and sets to empty string
 	const [filter, setFilter] = React.useState("");
 
 	// Handle filtering
-	// jobs is our JSON array
+	// Check for null filter
 	var lowercasedFilter = filter;
 	if(lowercasedFilter != null) {
 		lowercasedFilter = filter.toLowerCase();
 	}
-	// const lowercasedFilter = filter.toLowerCase();
-	const filteredData = jobs.filter(item => {
-		return Object.keys(item).some(key => {
-			if(item[key] != null) {
-				// console.log("Item key is " + item[key])
-				// console.log("lower filter is" + lowercasedFilter)
-				// console.log(item[key].toLowerCase().includes(lowercasedFilter))
-				return item[key].toLowerCase().includes(lowercasedFilter)
-			}}
-		);
-	});
 
+	// Filter jobs JSON
+	// Return every value from key-value pair that matches filter
 	const filteredJobs = jobs.filter(item => {
 		return Object.keys(item).some(key => {
 			if(item[key] != null) {
-				// console.log("Item key is " + item[key])
-				// console.log("lower filter is" + lowercasedFilter)
-				// console.log(item[key].toLowerCase().includes(lowercasedFilter))
-				return item[key].toLowerCase().includes(lowercasedFilter)
-			}}
-		);
+				return item[key].toLowerCase().includes(lowercasedFilter);
+			}
+		});
 	});
 
-	console.log("Filtered data is ", filteredData);
 	console.log("Jobs on page are", filteredJobs);
 
-	// modal
+	// Handle modal
 	const [open, setOpen] = React.useState(false);
 	// Sets selected job to whatever job we click
 	// Selected job will be passed into JobModal
@@ -65,9 +53,10 @@ export default function Jobs({jobs}) {
 	   setOpen(false);
 	};
 
-	// pagination
-	const numJobs = jobs.length;
+	// Handle pagination
+	const numJobs = filteredJobs.length;
 	const numPages = Math.ceil(numJobs / 50);
+
 
 	// This is a view state, so it goes in Jobs.js, NOT the App file
 	// useState declares a new state variable called 'activeStep'
@@ -97,10 +86,20 @@ export default function Jobs({jobs}) {
 	    });
 	};
 
+	// Handle scenario where 0 jobs are found and there are 0 pages of results
+	var currentPage = activeStep + 1;
+
+	if(numPages == 0) {
+		currentPage = 0;
+	}
+
 	// Log out what a single job looks like
 	console.log('job is', jobs[0]);
 
 	console.log('filter is', filter);
+
+	console.log('active step is ', activeStep);
+
 
 
 	// Create filter for job searching
@@ -139,7 +138,10 @@ export default function Jobs({jobs}) {
 				Commercial space jobs
 			</Typography>
 			<div>
-				<input value={filter} onChange={event => setFilter(event.target.value)} />
+				<input value={filter} onChange={(event) => {
+					setFilter(event.target.value);
+					setActiveStep(0);
+				}} />
 			</div>
 			<Typography variant="h6" component="h2">
 				Found {numJobs} jobs
@@ -154,7 +156,7 @@ export default function Jobs({jobs}) {
 				)
 			}
 			<div>
-				Page {activeStep + 1} of {numPages}
+				Page {currentPage} of {numPages}
 			</div>
 
 
@@ -164,7 +166,7 @@ export default function Jobs({jobs}) {
 		      position="static"
 		      activeStep={activeStep}
 		      nextButton={
-		        <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
+		        <Button size="small" onClick={handleNext} disabled={activeStep + 1 >= numPages}>
 		          Next
 		          <KeyboardArrowRight />
 		        </Button>
