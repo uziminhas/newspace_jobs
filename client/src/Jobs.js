@@ -7,6 +7,11 @@ import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { sizing } from '@material-ui/system';
+
 
 /*
 Jobs component will hold component tree
@@ -88,7 +93,6 @@ export default function Jobs({jobs}) {
 
 	// Handle scenario where 0 jobs are found and there are 0 pages of results
 	var currentPage = activeStep + 1;
-
 	if(numPages == 0) {
 		currentPage = 0;
 	}
@@ -137,15 +141,62 @@ export default function Jobs({jobs}) {
 			<Typography variant="h3" component="h1">
 				Commercial space jobs
 			</Typography>
+
+			<TextField
+			    id="outlined-basic"
+			    placeholder="Search by job title, company, location, etc."
+			    value={filter}
+			    onChange={(event) => {
+			    	setFilter(event.target.value);
+			    	setActiveStep(0);
+			    }}			    
+			    variant="outlined"
+			    fullWidth="true"
+			    InputProps={{
+				    startAdornment: (
+				        <InputAdornment position="start">
+				     	    <SearchIcon />
+				        </InputAdornment>
+			  	    ),
+				}}
+			/>
+	
+			{/*
 			<div>
-				<input value={filter} onChange={(event) => {
+				<input type="text" value={filter} placeholder="Search by job title, location, etc." onChange={(event) => {
 					setFilter(event.target.value);
 					setActiveStep(0);
 				}} />
 			</div>
+			*/}
+
 			<Typography variant="h6" component="h2">
 				Found {numJobs} jobs
 			</Typography>
+
+			{numJobs > 10 && (
+				<MobileStepper
+			      variant="progress"
+			      steps={numPages}
+			      position="static"
+			      activeStep={activeStep}
+			      nextButton={
+			        <Button size="small" onClick={handleNext} disabled={activeStep + 1 >= numPages}>
+			          Next
+			          <KeyboardArrowRight />
+			        </Button>
+			      }
+			      backButton={
+			        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+			          <KeyboardArrowLeft />
+			          Back
+			        </Button>
+			      }
+			    />
+			)}
+
+
+
 			{
 				filteredJobsOnPage.map(
 					(job, i) => <Job key={i} job={job} onClick={() => {
@@ -178,9 +229,6 @@ export default function Jobs({jobs}) {
 		        </Button>
 		      }
 		    />
-
-
-
 
 		</div>
 
