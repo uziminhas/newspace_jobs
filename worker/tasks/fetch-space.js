@@ -13,7 +13,7 @@ const setAsync = promisify(client.set).bind(client);
 
 // Add a query string for each page until you get to the end
 
-const baseURL = 'https://newspaceventures.com/jobs/space_jobs_db.json'
+const baseURL = 'https://newspaceventures.com/jobs/space_master.json'
 
 async function fetchSpace() {
 

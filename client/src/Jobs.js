@@ -142,6 +142,9 @@ export default function Jobs({jobs}) {
 				Commercial space jobs
 			</Typography>
 
+			<div className="blank">
+			</div>
+
 			<TextField
 			    id="outlined-basic"
 			    placeholder="Search by job title, company, location, etc."
@@ -173,6 +176,9 @@ export default function Jobs({jobs}) {
 			<Typography variant="h6" component="h2">
 				Found {numJobs} jobs
 			</Typography>
+
+			<div className="blank">
+			</div>
 
 			{numJobs > 10 && (
 				<MobileStepper
