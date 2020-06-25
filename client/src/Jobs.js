@@ -11,6 +11,14 @@ import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { sizing } from '@material-ui/system';
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import Switch from "@material-ui/core/Switch";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+
+
+
 
 
 /*
@@ -20,7 +28,30 @@ Render styling
 */
 
 
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     display: "flex"
+//   }
+// }));
+
 export default function Jobs({jobs}) {
+
+
+	// Handle dark and light themes
+	const [darkState, setDarkState] = React.useState(false);
+  	const palletType = darkState ? "dark" : "light";
+  	const darkTheme = createMuiTheme({
+  		palette: {
+  	    	type: palletType,
+  	  }
+  	});
+  	const handleThemeChange = () => {
+  		setDarkState(!darkState);
+  	};
+
+  	//const classes = useStyles();
+
+
 
 	// Declares new state variable for 'filter' and sets to empty string
 	const [filter, setFilter] = React.useState("");
@@ -135,108 +166,116 @@ export default function Jobs({jobs}) {
 	// On click, we want to push that job into the modal state
 
 	return (
-
-		<div className="jobs">
-			<JobModal open={open} job={selectedJob} handleClose={handleClose}/>
-			<Typography variant="h3" component="h1">
-				Commercial space jobs
-			</Typography>
-
-			<div className="blank">
-			</div>
-
-			<TextField
-			    id="outlined-basic"
-			    placeholder="Search by job title, company, location, etc."
-			    value={filter}
-			    onChange={(event) => {
-			    	setFilter(event.target.value);
-			    	setActiveStep(0);
-			    }}			    
-			    variant="outlined"
-			    fullWidth="true"
-			    InputProps={{
-				    startAdornment: (
-				        <InputAdornment position="start">
-				     	    <SearchIcon />
-				        </InputAdornment>
-			  	    ),
-				}}
-			/>
-	
-			{/*
-			<div>
-				<input type="text" value={filter} placeholder="Search by job title, location, etc." onChange={(event) => {
-					setFilter(event.target.value);
-					setActiveStep(0);
-				}} />
-			</div>
-			*/}
-
-			<Typography variant="h6" component="h2">
-				Found {numJobs} jobs
-			</Typography>
-
-			<div className="blank">
-			</div>
-
-			{numJobs > 10 && (
-				<MobileStepper
-			      variant="progress"
-			      steps={numPages}
-			      position="static"
-			      activeStep={activeStep}
-			      nextButton={
-			        <Button size="small" onClick={handleNext} disabled={activeStep + 1 >= numPages}>
-			          Next
-			          <KeyboardArrowRight />
-			        </Button>
-			      }
-			      backButton={
-			        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-			          <KeyboardArrowLeft />
-			          Back
-			        </Button>
-			      }
-			    />
-			)}
+		<ThemeProvider theme={darkTheme}>
+		    <CssBaseline />
 
 
+				<div className="jobs">
+					<JobModal open={open} job={selectedJob} handleClose={handleClose}/>
+					<Typography variant="h3" component="h1">
+						Commercial Space Jobs
+					</Typography>
 
-			{
-				filteredJobsOnPage.map(
-					(job, i) => <Job key={i} job={job} onClick={() => {
-						console.log('clicked')
-						handleClickOpen();
-						selectJob(job)
-					}} />
-				)
-			}
-			<div>
-				Page {currentPage} of {numPages}
-			</div>
+					<div className="blank">
+					</div>
+
+					<Switch checked={darkState} onChange={handleThemeChange} />
 
 
-			<MobileStepper
-		      variant="progress"
-		      steps={numPages}
-		      position="static"
-		      activeStep={activeStep}
-		      nextButton={
-		        <Button size="small" onClick={handleNext} disabled={activeStep + 1 >= numPages}>
-		          Next
-		          <KeyboardArrowRight />
-		        </Button>
-		      }
-		      backButton={
-		        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-		          <KeyboardArrowLeft />
-		          Back
-		        </Button>
-		      }
-		    />
+					<TextField
+					    id="outlined-basic"
+					    placeholder="Search by job title, company, location, etc."
+					    value={filter}
+					    onChange={(event) => {
+					    	setFilter(event.target.value);
+					    	setActiveStep(0);
+					    }}			    
+					    variant="outlined"
+					    fullWidth="true"
+					    InputProps={{
+						    startAdornment: (
+						        <InputAdornment position="start">
+						     	    <SearchIcon />
+						        </InputAdornment>
+					  	    ),
+						}}
+					/>
+			
+					{/*
+					<div>
+						<input type="text" value={filter} placeholder="Search by job title, location, etc." onChange={(event) => {
+							setFilter(event.target.value);
+							setActiveStep(0);
+						}} />
+					</div>
+					*/}
 
-		</div>
+					<Typography variant="h6" component="h2">
+						Found {numJobs} jobs
+					</Typography>
+
+					<div className="blank">
+					</div>
+
+					{numJobs > 10 && (
+						<MobileStepper
+					      variant="progress"
+					      steps={numPages}
+					      position="static"
+					      activeStep={activeStep}
+					      nextButton={
+					        <Button size="small" onClick={handleNext} disabled={activeStep + 1 >= numPages}>
+					          Next
+					          <KeyboardArrowRight />
+					        </Button>
+					      }
+					      backButton={
+					        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+					          <KeyboardArrowLeft />
+					          Back
+					        </Button>
+					      }
+					    />
+					)}
+
+
+
+					{
+						filteredJobsOnPage.map(
+							(job, i) => <Job key={i} job={job} onClick={() => {
+								console.log('clicked')
+								handleClickOpen();
+								selectJob(job)
+							}} />
+						)
+					}
+					<div>
+						Page {currentPage} of {numPages}
+					</div>
+
+
+					<MobileStepper
+				      variant="progress"
+				      steps={numPages}
+				      position="static"
+				      activeStep={activeStep}
+				      nextButton={
+				        <Button size="small" onClick={handleNext} disabled={activeStep + 1 >= numPages}>
+				          Next
+				          <KeyboardArrowRight />
+				        </Button>
+				      }
+				      backButton={
+				        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+				          <KeyboardArrowLeft />
+				          Back
+				        </Button>
+				      }
+				    />
+
+				</div>
+
+		</ThemeProvider>
 
 	)
 
