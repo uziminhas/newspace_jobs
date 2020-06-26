@@ -15,6 +15,8 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { FlapDisplay, Presets } from 'react-split-flap-effect'
+
 
 
 
@@ -173,8 +175,14 @@ export default function Jobs({jobs}) {
 				<div className="jobs">
 					<JobModal open={open} job={selectedJob} handleClose={handleClose}/>
 					<Typography variant="h3" component="h1">
-						Commercial Space Jobs
+						Commercial Space Jobs - v2
 					</Typography>
+
+					<FlapDisplay
+					      chars={Presets.ALPHANUM + ',!'}
+					      length={13}
+					      value={'Hello, World!'}
+					/>
 
 					<div className="blank">
 					</div>
