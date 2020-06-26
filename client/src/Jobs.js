@@ -15,7 +15,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { FlapDisplay, Presets } from 'react-split-flap-effect'
+// import { FlapDisplay, Presets } from 'react-split-flap-effect'
 
 
 
@@ -30,11 +30,20 @@ Render styling
 */
 
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     display: "flex"
-//   }
-// }));
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex"
+  },
+  job: {
+  	width: "80%",
+  	margin: "0 auto",
+  	display: "flex",
+  	justifyContent: "space-between",
+  	margin: "20px 0",
+  	padding: "20px 10px",
+  	alignItems: "center"
+  }
+}));
 
 export default function Jobs({jobs}) {
 
@@ -51,7 +60,7 @@ export default function Jobs({jobs}) {
   		setDarkState(!darkState);
   	};
 
-  	//const classes = useStyles();
+  	const classes = useStyles();
 
 
 
@@ -178,11 +187,12 @@ export default function Jobs({jobs}) {
 						Commercial Space Jobs - v2
 					</Typography>
 
-					<FlapDisplay
+					{/*<FlapDisplay
 					      chars={Presets.ALPHANUM + ',!'}
 					      length={13}
 					      value={'Hello, World!'}
 					/>
+					*/}
 
 					<div className="blank">
 					</div>
@@ -250,7 +260,7 @@ export default function Jobs({jobs}) {
 
 					{
 						filteredJobsOnPage.map(
-							(job, i) => <Job key={i} job={job} onClick={() => {
+							(job, i) => <Job className={classes.job} key={i} job={job} onClick={() => {
 								console.log('clicked')
 								handleClickOpen();
 								selectJob(job)

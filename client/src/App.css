@@ -1,5 +1,5 @@
 body {
-  margin: 20px 40px;
+  margin: 20px 100px;
 }
 
 .TextField {
@@ -13,8 +13,12 @@ body {
   left: 0;
 }
 
+.jobs {
+  margin: 20px 90px;
+}
+
 .job {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
