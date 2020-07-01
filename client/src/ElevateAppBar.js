@@ -16,7 +16,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-
+import { MemoryRouter as Router } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
+import TalentMatcher from './TalentMatcher';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +94,10 @@ ElevationScroll.propTypes = {
   window: PropTypes.func,
 };
 
+const LinkBehavior = React.forwardRef((props, ref) => (
+  <RouterLink ref={ref} to="/talent-matcher" {...props} />
+));
+
 export default function ElevateAppBar(props) {
 
   const classes = useStyles();
@@ -104,17 +110,19 @@ export default function ElevateAppBar(props) {
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             NewSpace Ventures
           </Typography>
-          <nav>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Features
-            </Link>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Enterprise
-            </Link>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Support
-            </Link>
-          </nav>
+          <Router>
+            <nav>
+              <Link variant="button" color="textPrimary" component={LinkBehavior} className={classes.link}>
+                Talent Matcher
+              </Link>
+              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                Enterprise
+              </Link>
+              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                Support
+              </Link>
+            </nav>
+          </Router>
           <Button href="#" color="primary" variant="outlined" className={classes.link}>
             Login
           </Button>

@@ -27,6 +27,8 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
 import ElevateAppBar from './ElevateAppBar';
+import { Link } from 'react-router-dom'
+
 
 
 
@@ -70,7 +72,10 @@ export default function Jobs({jobs}) {
   	const darkTheme = createMuiTheme({
   		palette: {
   	    	type: palletType,
-  	  }
+  	    	background: {
+  	    		default: palletType === 'dark' ? '#000' : '#fff' 
+  	    	}
+  	  	}
   	});
   	const handleThemeChange = () => {
   		setDarkState(!darkState);
@@ -213,6 +218,10 @@ export default function Jobs({jobs}) {
 
 		    <ElevateAppBar>
 		    </ElevateAppBar>
+
+		    <Link to='/talent-matcher'>
+		        Go to registration
+		    </Link>
 
 
 				<div className="jobs">

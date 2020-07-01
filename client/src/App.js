@@ -1,7 +1,12 @@
 import React from 'react';
 import './App.css';
 import Jobs from './Jobs';
+import TalentMatcher from './TalentMatcher';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+
 var fetch = require('node-fetch');
+
 
 
 /*
@@ -43,9 +48,17 @@ function App() {
 	}, [])
 
   return (
-    <div className="App">
-      <Jobs jobs={jobList} />
-    </div>
+
+    <BrowserRouter>
+	    	<Route
+	    		exact path="/"
+	    		component={(props) => <Jobs {...props} jobs={jobList} />}
+	    	/>
+	    	<Route
+	    		exact path="/talent-matcher"
+	    		component={TalentMatcher}
+	    	/>
+    </BrowserRouter>
   );
 }
 
