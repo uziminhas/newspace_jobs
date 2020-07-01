@@ -15,19 +15,22 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import Navbar from 'react-bootstrap/Navbar'
+import ContainerBS from 'react-bootstrap/Container';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import PropTypes from 'prop-types';
+import ElevateAppBar from './ElevateAppBar';
+
+
+
 // import { FlapDisplay, Presets } from 'react-split-flap-effect'
-
-
-
-
-
-
-
-/*
-Jobs component will hold component tree
-Render styling
-
-*/
 
 
 const useStyles = makeStyles(theme => ({
@@ -42,7 +45,20 @@ const useStyles = makeStyles(theme => ({
   	margin: "20px 0",
   	padding: "20px 10px",
   	alignItems: "center"
-  }
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  toolbar: {
+    minHeight: 256,
+    alignItems: 'flex-start',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+    alignSelf: 'flex-end',
+  },
 }));
 
 export default function Jobs({jobs}) {
@@ -181,8 +197,32 @@ export default function Jobs({jobs}) {
 		    <CssBaseline />
 
 
+
+
+
+		    {/* Hero unit */}
+		    <Container maxWidth="sm" component="main" className={classes.heroContent}>
+		      <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+		        Pricing
+		      </Typography>
+		      <Typography variant="h5" align="center" color="textSecondary" component="p">
+		        Quickly build an effective pricing table for your potential customers with this layout.
+		        It&apos;s built with default Material-UI components with little customization.
+		      </Typography>
+		    </Container>
+
+		    <ElevateAppBar>
+		    </ElevateAppBar>
+
+
 				<div className="jobs">
-					<JobModal open={open} job={selectedJob} handleClose={handleClose}/>
+					{/*<JobModal open={open} job={selectedJob} handleClose={handleClose}/>*/}
+
+
+
+
+
+
 					<Typography variant="h3" component="h1">
 						Commercial Space Jobs - v2
 					</Typography>
@@ -260,10 +300,11 @@ export default function Jobs({jobs}) {
 
 					{
 						filteredJobsOnPage.map(
-							(job, i) => <Job className={classes.job} key={i} job={job} onClick={() => {
+							(job, i) => <Job key={i} job={job} onClick={() => {
 								console.log('clicked')
-								handleClickOpen();
-								selectJob(job)
+								window.open(job.url)
+								{/*handleClickOpen();
+								selectJob(job)*/}
 							}} />
 						)
 					}
