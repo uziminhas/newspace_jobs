@@ -27,7 +27,11 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
 import ElevateAppBar from './ElevateAppBar';
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+
 
 
 
@@ -61,7 +65,33 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     alignSelf: 'flex-end',
   },
+  heroContent: {
+    padding: theme.spacing(20, 0, 6),
+  },
+  '@global': {
+    ul: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    },
+  },
+  appBar: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+  },
+  toolbar: {
+    flexWrap: 'wrap',
+  },
+  toolbarTitle: {
+    flexGrow: 1,
+  },
+  link: {
+    margin: theme.spacing(1, 1.5),
+  },
 }));
+
+const LinkBehavior = React.forwardRef((props, ref) => (
+  <RouterLink ref={ref} to="/talent-matcher" {...props} />
+));
 
 export default function Jobs({jobs}) {
 
@@ -202,13 +232,10 @@ export default function Jobs({jobs}) {
 		    <CssBaseline />
 
 
-
-
-
 		    {/* Hero unit */}
-		    <Container maxWidth="sm" component="main" className={classes.heroContent}>
-		      <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-		        Pricing
+		    <Container maxWidth="md" component="main" className={classes.heroContent}>
+		      <Typography component="h1" variant="h2" color="textPrimary" gutterBottom>
+		        Find global opportunities within the commercial space economy
 		      </Typography>
 		      <Typography variant="h5" align="center" color="textSecondary" component="p">
 		        Quickly build an effective pricing table for your potential customers with this layout.
@@ -216,12 +243,35 @@ export default function Jobs({jobs}) {
 		      </Typography>
 		    </Container>
 
-		    <ElevateAppBar>
-		    </ElevateAppBar>
+		    {/*<ElevateAppBar>
+		    </ElevateAppBar>*/}
 
-		    <Link to='/talent-matcher'>
-		        Go to registration
-		    </Link>
+		    <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
+		      <Toolbar className={classes.toolbar}>
+		        <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+		          NewSpace Ventures
+		        </Typography>
+		        
+		        <FormControlLabel className={classes.link}
+		        	control={<Switch checked={darkState} onChange={handleThemeChange}/>}
+		        	label="ENABLE SPACE MODE"
+		        />
+		        <nav>
+		          <Link variant="button" color="textPrimary" component={LinkBehavior} className={classes.link}>
+		            SIGN UP FOR TALENT MATCHING
+		          </Link>
+		          <Link variant="button" color="textPrimary" href="/talent-matcher" className={classes.link}>
+		            SUBMIT AN OPPORTUNITY
+		          </Link>
+		          <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+		            ABOUT US
+		          </Link>
+		        </nav>
+		        <Button href="#" color="primary" variant="outlined" className={classes.link}>
+		          LEARN MORE
+		        </Button>
+		      </Toolbar>
+		    </AppBar>
 
 
 				<div className="jobs">
@@ -232,9 +282,9 @@ export default function Jobs({jobs}) {
 
 
 
-					<Typography variant="h3" component="h1">
+					{/*<Typography variant="h3" component="h1">
 						Commercial Space Jobs - v2
-					</Typography>
+					</Typography>*/}
 
 					{/*<FlapDisplay
 					      chars={Presets.ALPHANUM + ',!'}
@@ -245,9 +295,6 @@ export default function Jobs({jobs}) {
 
 					<div className="blank">
 					</div>
-
-					<Switch checked={darkState} onChange={handleThemeChange} />
-
 
 					<TextField
 					    id="outlined-basic"

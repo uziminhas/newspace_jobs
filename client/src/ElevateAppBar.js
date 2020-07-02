@@ -16,9 +16,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-import { MemoryRouter as Router } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import TalentMatcher from './TalentMatcher';
+import Switch from "@material-ui/core/Switch";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -100,34 +104,50 @@ const LinkBehavior = React.forwardRef((props, ref) => (
 
 export default function ElevateAppBar(props) {
 
+  // Handle dark and light themes
+  const [darkState, setDarkState] = React.useState(false);
+    const palletType = darkState ? "dark" : "light";
+    const darkTheme = createMuiTheme({
+      palette: {
+          type: palletType,
+          background: {
+            default: palletType === 'dark' ? '#000' : '#fff' 
+          }
+        }
+    });
+    const handleThemeChange = () => {
+      setDarkState(!darkState);
+    };
+
   const classes = useStyles();
 
 
   return (
-   <React.Fragment>
-      <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            NewSpace Ventures
-          </Typography>
-          <Router>
+  <ThemeProvider theme={darkTheme}>
+     <React.Fragment>
+        <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+              NewSpace Ventures
+            </Typography>
+            <Switch checked={darkState} onChange={handleThemeChange} />
             <nav>
               <Link variant="button" color="textPrimary" component={LinkBehavior} className={classes.link}>
-                Talent Matcher
+                SIGN UP FOR TALENT MATCHING
+              </Link>
+              <Link variant="button" color="textPrimary" href="/talent-matcher" className={classes.link}>
+                SUBMIT AN OPPORTUNITY
               </Link>
               <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                Enterprise
-              </Link>
-              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                Support
+                ABOUT US
               </Link>
             </nav>
-          </Router>
-          <Button href="#" color="primary" variant="outlined" className={classes.link}>
-            Login
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
+            <Button href="#" color="primary" variant="outlined" className={classes.link}>
+              LEARN MORE
+            </Button>
+          </Toolbar>
+        </AppBar>
+      </React.Fragment>
+  </ThemeProvider>
   );
 }

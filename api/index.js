@@ -23,4 +23,8 @@ app.get('/jobs', async (req, res) => {
 	return res.send(jobs)
 })
 
+app.pst('api/subscribe', (req, res) => {
+	var data = req.body;
+})
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
