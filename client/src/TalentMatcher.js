@@ -17,6 +17,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import { Link as RouterLink } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
+
 
 
 
@@ -93,14 +101,49 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formControl: {
+    minWidth: 220,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  selectField: {
+    height: 45,
+
+  }
 }));
 
 const LinkBehavior = React.forwardRef((props, ref) => (
   <RouterLink ref={ref} to="/" {...props} />
 ));
 
+const names = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
+
 export default function SignUp() {
   const classes = useStyles();
+
+  const [state, setState] = React.useState({
+      role: '',
+  });
+  
+  const handleChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
 
   return (
     <React.Fragment>
@@ -139,9 +182,9 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Subscribe to learn more about the launch of our talent matching service
           </Typography>
-          <form className={classes.form} noValidate>
+          <form action="/api/subscribe" method="POST" className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -177,17 +220,53 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
+              {/*<Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor="role-native-simple">I am a</InputLabel>
+                  <Select className={classes.selectField}
+                    native
+                    value={state.role}
+                    onChange={handleChange}
+                    inputProps={{
+                      name: 'role',
+                      id: 'role-native-simple',
+                    }}
+                  >
+                    <option aria-label="None" value="" />
+                    <option value={10}>Ten</option>
+                    <option value={20}>Twenty</option>
+                    <option value={30}>Thirty</option>
+                  </Select>
+                </FormControl>
+              </Grid>*/}
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel id="demo-simple-select-outlined-label">I am a</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={state.role}
+                    onChange={handleChange}
+                    label="I am a"
+                    inputProps={{
+                      name: 'role',
+                      id: 'role-native-simple',
+                    }}
+                  >
+
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
