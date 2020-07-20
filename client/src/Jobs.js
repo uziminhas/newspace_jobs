@@ -2,7 +2,6 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Job from './Job';
 import JobModal from './JobModal';
-
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -30,10 +29,6 @@ import ElevateAppBar from './ElevateAppBar';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
-
-
-
 
 
 // import { FlapDisplay, Presets } from 'react-split-flap-effect'
@@ -197,36 +192,6 @@ export default function Jobs({jobs}) {
 
 	console.log('active step is ', activeStep);
 
-
-
-	// Create filter for job searching
-	// const handleChange = event => {
-	// 	console.log("Event " + event.target.value)
-	// 	this.setState({ filter: event.target.value });
-	// };
-
-	// const checkIncludesFilter = (item) => {
-	// 	for(var key in item) {
-	// 		if(key == null) {
-	// 			return false;
-	// 		}
-	// 		else {
-	// 			return item[key].toLowerCase().includes(lowercasedFilter)				
-	// 		}
-	// 	}
-	// };
-
-	
-
-
-	// const filteredData = jobs.filter(item => {
-	// 	return Object.keys(item).some(checkIncludesFilter(item));
-	// });
-
-
-
-	// On click, we want to push that job into the modal state
-
 	return (
 		<ThemeProvider theme={darkTheme}>
 		    <CssBaseline />
@@ -238,8 +203,7 @@ export default function Jobs({jobs}) {
 		        Find global opportunities within the commercial space economy
 		      </Typography>
 		      <Typography variant="h5" align="center" color="textSecondary" component="p">
-		        Quickly build an effective pricing table for your potential customers with this layout.
-		        It&apos;s built with default Material-UI components with little customization.
+		        Quickly search from 1000s of jobs in the NewSpace industry - apply for our private beta to be matched with roles at innovative space start-ups and scale-ups.
 		      </Typography>
 		    </Container>
 
@@ -249,7 +213,7 @@ export default function Jobs({jobs}) {
 		    <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
 		      <Toolbar className={classes.toolbar}>
 		        <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-		          NewSpace Ventures
+		          
 		        </Typography>
 		        
 		        <FormControlLabel className={classes.link}
@@ -276,11 +240,6 @@ export default function Jobs({jobs}) {
 
 				<div className="jobs">
 					{/*<JobModal open={open} job={selectedJob} handleClose={handleClose}/>*/}
-
-
-
-
-
 
 					{/*<Typography variant="h3" component="h1">
 						Commercial Space Jobs - v2

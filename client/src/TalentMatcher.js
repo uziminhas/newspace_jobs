@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,12 +21,8 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
-
-
 
 
 function Copyright() {
@@ -117,33 +114,116 @@ const LinkBehavior = React.forwardRef((props, ref) => (
   <RouterLink ref={ref} to="/" {...props} />
 ));
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+const roles = [
+  'Undergraduate student',
+  'Master\'s student',
+  'PhD student',
+  'Employee in space sector',
+  'Employee in non-space industry',
+  'Other',
 ];
 
 export default function SignUp() {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
+      firstName: '',
+      lastName:'',
+      email: '',
       role: '',
+      lastNameError: false,
+      roleError: false,
+      emailError: false,
+      selected: null,
   });
-  
-  const handleChange = (event) => {
-    const name = event.target.name;
+
+  const handleFirstNameChange = (event) => {
+    const value = event.target.value;
     setState({
       ...state,
-      [name]: event.target.value,
+      [event.target.name]: value,
+      firstNameError: false
     });
   };
+
+  const handleLastNameChange = (event) => {
+    const value = event.target.value;
+    setState({
+      ...state,
+      [event.target.name]: value,
+      lastNameError: false
+    });
+  };
+
+  const handleEmailChange = (event) => {
+    const value = event.target.value;
+    setState({
+      ...state,
+      [event.target.name]: value,
+      emailError: false
+    });
+  };
+
+  const handleRoleChange = (event) => {
+    const value = event.target.value;
+    setState({
+      ...state,
+      [event.target.name]: value,
+      roleError: false,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    var existsFirstNameError = !state.firstName ? true : false;
+    var existsLastNameError = !state.lastName ? true : false;
+    var existsEmailError = !state.email ? true : false;
+    var existsRoleError = !state.role ? true : false;
+
+    // Ensure you set State to current state values
+    setState({ 
+      firstName: state.firstName,
+      lastName: state.lastName,
+      email: state.email,
+      role: state.role,
+      firstNameError: existsFirstNameError,
+      lastNameError: existsLastNameError,
+      emailError: existsEmailError, 
+      roleError: existsRoleError 
+    });
+
+    console.log("Submitting...");
+
+    if(existsFirstNameError 
+      || existsLastNameError 
+      || existsEmailError 
+      || existsRoleError
+      ) {
+      event.preventDefault();
+      return false;
+    }
+
+    event.preventDefault();
+
+    console.log("Submitting to API");
+
+    const subscriber = {
+      firstName: state.firstName,
+      lastName: state.lastName,
+      email: state.email,
+      role: state.role
+    };
+
+    // Sending a POST to this URL
+    axios
+      .post('http://localhost:3001/api/subscribe', subscriber)
+      .then(() => console.log('New subscription'))
+      .catch(err => {
+        console.error(err);
+      });
+
+    return true;
+  
+  }
 
   return (
     <React.Fragment>
@@ -184,7 +264,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Subscribe to learn more about the launch of our talent matching service
           </Typography>
-          <form action="/api/subscribe" method="POST" className={classes.form} noValidate>
+          <form onSubmit={handleSubmit}/*action="/api/subscribe" method="POST"*/ className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -196,10 +276,14 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={handleFirstNameChange}
+                  error={state.firstNameError}
+                  value={state.firstName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  required
                   variant="outlined"
                   required
                   fullWidth
@@ -207,10 +291,14 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  onChange={handleLastNameChange}
+                  error={state.lastNameError}
+                  value={state.lastName}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  required
                   variant="outlined"
                   required
                   fullWidth
@@ -218,36 +306,21 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleEmailChange}
+                  error={state.emailError}
+                  value={state.email}
                 />
               </Grid>
-              {/*<Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel htmlFor="role-native-simple">I am a</InputLabel>
-                  <Select className={classes.selectField}
-                    native
-                    value={state.role}
-                    onChange={handleChange}
-                    inputProps={{
-                      name: 'role',
-                      id: 'role-native-simple',
-                    }}
-                  >
-                    <option aria-label="None" value="" />
-                    <option value={10}>Ten</option>
-                    <option value={20}>Twenty</option>
-                    <option value={30}>Thirty</option>
-                  </Select>
-                </FormControl>
-              </Grid>*/}
               <Grid item xs={12}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel id="demo-simple-select-outlined-label">I am a</InputLabel>
+                <FormControl variant="outlined" fullWidth error={state.roleError}>
+                  <InputLabel id="demo-simple-select-outlined-label">I am an</InputLabel>
                   <Select
+                    required
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     value={state.role}
-                    onChange={handleChange}
-                    label="I am a"
+                    onChange={handleRoleChange}
+                    label="I am an"
                     inputProps={{
                       name: 'role',
                       id: 'role-native-simple',
@@ -257,15 +330,13 @@ export default function SignUp() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        {name}
+                    {roles.map((role) => (
+                      <MenuItem key={role} value={role}>
+                        {role}
                       </MenuItem>
                     ))}
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
                   </Select>
+                  {state.roleError && <FormHelperText>Please select an occupation</FormHelperText>}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -282,19 +353,19 @@ export default function SignUp() {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              Subscribe
             </Button>
             <Grid container justify="flex-end">
-              <Grid item>
+              {/*<Grid item>
                 <Link href="#" variant="body2">
                   Already have an account? Sign in
                 </Link>
-              </Grid>
+              </Grid>*/}
             </Grid>
           </form>
         </div>
         <Box mt={5}>
-          <Copyright />
+          {/*<Copyright />*/}
         </Box>
       </Container>
     </React.Fragment>
