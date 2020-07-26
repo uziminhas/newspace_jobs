@@ -24,8 +24,4 @@ export default function Job({job, onClick}) {
 		</Paper>
 	)
 
-
-
-
-
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Jobs from './Jobs';
 import TalentMatcher from './TalentMatcher';
+import MapIndex from './MapIndex';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 
@@ -57,6 +58,10 @@ function App() {
 	    	<Route
 	    		exact path="/talent-matcher"
 	    		component={TalentMatcher}
+	    	/>
+	    	<Route
+	    		exact path="/map"
+	    		component={MapIndex}
 	    	/>
     </BrowserRouter>
   );
