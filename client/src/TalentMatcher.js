@@ -213,15 +213,28 @@ export default function SignUp() {
       role: state.role
     };
 
+    console.log(subscriber);
+
     // Sending a POST to this URL
     axios
       .post('http://localhost:3001/api/subscribe', subscriber)
-      .then(() => console.log('New subscription'))
+      .then(() => console.log('New subscription created'))
       .catch(err => {
         console.error(err);
       });
 
-    return true;
+    // Clear form inputs and state after submit
+    setState({ 
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: '',
+      firstNameError: '',
+      lastNameError: '',
+      emailError: '', 
+      roleError: '' 
+    });
+
   
   }
 

@@ -1,16 +1,15 @@
 const express = require('express')
 const axios = require('axios');
 const fetch = require('node-fetch');
-const app = express()
-const port = 3001
-
+const app = express();
+const port = 3001;
 const redis = require("redis"); // Create new instance of Redis client
 const client = redis.createClient();
-
 const { promisify } = require("util");
 const getAsync = promisify(client.get).bind(client);
-
 var cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 
 //app.use(cors());
 
@@ -21,10 +20,8 @@ app.use(function(req, res, next) {
 	next();
 })
 
-app.use('/api/subscribe', (req, res, next) => {
-	console.log("POST request received");
-	next();
-})
+app.use(express.json());
+
 
 // Converted to an asynch function
 app.get('/jobs', async (req, res) => {
@@ -43,12 +40,10 @@ app.get('/jobs', async (req, res) => {
 
 // Accepting a post at this URL, listening...
 // CHECK POST FUNCTION, NO RESPONSE OCCURING
-app.post('/api/subscribe', async (req, res) => {
-
-	console.log("POST request received 2");
+app.post('/api/subscribe', (req, res) => {
 
 	try {
-
+		
 		const { firstName, lastName, email, role } = req.body;
 		const data = {
 			email_address: email,
@@ -60,11 +55,32 @@ app.post('/api/subscribe', async (req, res) => {
 			}
 		};
 		const postData = JSON.stringify(data);
+
+		console.log("JSON is " + postData);
+		
+		var config = {
+		  method: 'post',
+		  url: '' + process.env.MAILCHIMP_LISTSERVE_URL,
+		  headers: { 
+		    'Authorization': 'Basic ' + new Buffer(process.env.MAILCHIMP_API_KEY).toString('base64')
+		  },
+		  data : data
+		};
+
+		axios(config)
+		.then(function (response) {
+		  console.log(JSON.stringify(response.data));
+		})
+		.catch(function (error) {
+		  console.log(error);
+		});
+
 		res.status(200); // <------- this is not a response
 
 
 	} catch (error) {
 		res.status(500);
+		console.log("POST request received 2");
 	}
 
 	res.json(); // This is the actual response
@@ -96,18 +112,7 @@ app.post('/api/subscribe', async (req, res) => {
 	Second issue is express function isn't waiting
 	*/
 
-	/*
-	await axios.post('https://us10.api.mailchimp.com/3.0/lists/71eccdc438', {
-	  headers: {
-	    Authorization: `auth d38a401344ee09e31b4903bfe`
-	  },
-	  body: postData
-	})
-	  .then(res.statusCode === 200 ?
-	    console.log("Submitted") :
-	    console.log("Rejected"))
-	  .catch(err => console.log(err))
-	*/
+	
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
