@@ -4,6 +4,7 @@ import ReactGlobe from 'react-globe';
 
 import defaultMarkers from './markers';
 
+
 function getTooltipContent(marker) {
   return `CITY: ${marker.city} (Value: ${marker.value})`;
 }
@@ -35,7 +36,7 @@ export default function MapIndex() {
   }
 
   return (
-    <div className="MapIndex" style={{ margin: '0px 0px', width: '100vw', height: '50vh' }}>
+    <div className="MapIndex" style={{ margin: '0px 0px', width: '100vw', height: '100vh' }}>
       <ReactGlobe
         globeOptions={{
           texture:
