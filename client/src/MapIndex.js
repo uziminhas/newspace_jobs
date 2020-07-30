@@ -35,11 +35,11 @@ export default function MapIndex() {
   }
 
   return (
-    <div className="MapIndex"/*style={{ width: '100vw', height: '50vh' }}*/>
+    <div className="MapIndex" style={{ margin: '0px 0px', width: '100vw', height: '50vh' }}>
       <ReactGlobe
         globeOptions={{
           texture:
-            'https://raw.githubusercontent.com/chrisrzhou/react-globe/master/textures/globe_dark.jpg',
+            'https://raw.githubusercontent.com/chrisrzhou/react-globe/main/textures/globe_dark.jpg',
         }}
         markers={markers}
         markerOptions={{
