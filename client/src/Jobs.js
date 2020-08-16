@@ -29,6 +29,8 @@ import ElevateAppBar from './ElevateAppBar';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useTheme } from '@material-ui/core/styles';
+
 
 
 // import { FlapDisplay, Presets } from 'react-split-flap-effect'
@@ -84,11 +86,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const LinkBehavior = React.forwardRef((props, ref) => (
+const GoToTalentMatcher = React.forwardRef((props, ref) => (
   <RouterLink ref={ref} to="/talent-matcher" {...props} />
 ));
 
+const GoToMap = React.forwardRef((props, ref) => (
+  <RouterLink ref={ref} to="/map" {...props} />
+));
+
 export default function Jobs({jobs}) {
+
+	const thisTheme = useTheme();
 
 
 	// Handle dark and light themes
@@ -193,7 +201,7 @@ export default function Jobs({jobs}) {
 	console.log('active step is ', activeStep);
 
 	return (
-		<ThemeProvider theme={darkTheme}>
+		<ThemeProvider theme={thisTheme}>
 		    <CssBaseline />
 
 
@@ -221,10 +229,10 @@ export default function Jobs({jobs}) {
 		        	label="ENABLE SPACE MODE"
 		        />
 		        <nav>
-		          <Link variant="button" color="textPrimary" component={LinkBehavior} className={classes.link}>
+		          <Link variant="button" color="textPrimary" component={GoToTalentMatcher} className={classes.link}>
 		            SIGN UP FOR TALENT MATCHING
 		          </Link>
-		          <Link variant="button" color="textPrimary" href="/talent-matcher" className={classes.link}>
+		          <Link variant="button" color="textPrimary" component={GoToMap} className={classes.link}>
 		            SUBMIT AN OPPORTUNITY
 		          </Link>
 		          <Link variant="button" color="textPrimary" href="#" className={classes.link}>

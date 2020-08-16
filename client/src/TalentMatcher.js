@@ -23,6 +23,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useTheme } from '@material-ui/core/styles';
+
 
 
 function Copyright() {
@@ -124,6 +126,8 @@ const roles = [
 ];
 
 export default function SignUp() {
+  const darkTheme = useTheme();
+
   const classes = useStyles();
 
   const [state, setState] = React.useState({
@@ -239,149 +243,150 @@ export default function SignUp() {
   }
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            NewSpace Ventures
-          </Typography>
-          
-          {/*<FormControlLabel className={classes.link}
-            control={<Switch checked={darkState} onChange={handleThemeChange}/>}
-            label="ENABLE SPACE MODE"
-          />*/}
-          <nav>
-            <Link variant="button" color="textPrimary" component={LinkBehavior} className={classes.link}>
-              RETURN HOME
-            </Link>
-            <Link variant="button" color="textPrimary" href="/talent-matcher" className={classes.link}>
-              SUBMIT AN OPPORTUNITY
-            </Link>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              ABOUT US
-            </Link>
-          </nav>
-          <Button href="#" color="primary" variant="outlined" className={classes.link}>
-            LEARN MORE
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <Container component="main" maxWidth="xs">
+    <ThemeProvider theme={darkTheme}>
+      <React.Fragment>
         <CssBaseline />
-        
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Subscribe to learn more about the launch of our talent matching service
-          </Typography>
-          <form onSubmit={handleSubmit}/*action="/api/subscribe" method="POST"*/ className={classes.form} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={handleFirstNameChange}
-                  error={state.firstNameError}
-                  value={state.firstName}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                  onChange={handleLastNameChange}
-                  error={state.lastNameError}
-                  value={state.lastName}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={handleEmailChange}
-                  error={state.emailError}
-                  value={state.email}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl variant="outlined" fullWidth error={state.roleError}>
-                  <InputLabel id="demo-simple-select-outlined-label">I am an</InputLabel>
-                  <Select
-                    required
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={state.role}
-                    onChange={handleRoleChange}
-                    label="I am an"
-                    inputProps={{
-                      name: 'role',
-                      id: 'role-native-simple',
-                    }}
-                  >
-
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {roles.map((role) => (
-                      <MenuItem key={role} value={role}>
-                        {role}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {state.roleError && <FormHelperText>Please select an occupation</FormHelperText>}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Subscribe
+        <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+              NewSpace Ventures
+            </Typography>
+            
+            {/*<FormControlLabel className={classes.link}
+              control={<Switch checked={darkState} onChange={handleThemeChange}/>}
+              label="ENABLE SPACE MODE"
+            />*/}
+            <nav>
+              <Link variant="button" color="textPrimary" component={LinkBehavior} className={classes.link}>
+                RETURN HOME
+              </Link>
+              <Link variant="button" color="textPrimary" href="/talent-matcher" className={classes.link}>
+                SUBMIT AN OPPORTUNITY
+              </Link>
+              <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                ABOUT US
+              </Link>
+            </nav>
+            <Button href="#" color="primary" variant="outlined" className={classes.link}>
+              LEARN MORE
             </Button>
-            <Grid container justify="flex-end">
-              {/*<Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>*/}
-            </Grid>
-          </form>
-        </div>
-        <Box mt={5}>
-          {/*<Copyright />*/}
-        </Box>
-      </Container>
-    </React.Fragment>
+          </Toolbar>
+        </AppBar>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Subscribe to learn more about the launch of our talent matching service
+            </Typography>
+            <form onSubmit={handleSubmit}/*action="/api/subscribe" method="POST"*/ className={classes.form} noValidate>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="fname"
+                    name="firstName"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                    onChange={handleFirstNameChange}
+                    error={state.firstNameError}
+                    value={state.firstName}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="lname"
+                    onChange={handleLastNameChange}
+                    error={state.lastNameError}
+                    value={state.lastName}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    onChange={handleEmailChange}
+                    error={state.emailError}
+                    value={state.email}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl variant="outlined" fullWidth error={state.roleError}>
+                    <InputLabel id="demo-simple-select-outlined-label">I am an</InputLabel>
+                    <Select
+                      required
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      value={state.role}
+                      onChange={handleRoleChange}
+                      label="I am an"
+                      inputProps={{
+                        name: 'role',
+                        id: 'role-native-simple',
+                      }}
+                    >
 
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {roles.map((role) => (
+                        <MenuItem key={role} value={role}>
+                          {role}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {state.roleError && <FormHelperText>Please select an occupation</FormHelperText>}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={<Checkbox value="allowExtraEmails" color="primary" />}
+                    label="I want to receive inspiration, marketing promotions and updates via email."
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Subscribe
+              </Button>
+              <Grid container justify="flex-end">
+                {/*<Grid item>
+                  <Link href="#" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>*/}
+              </Grid>
+            </form>
+          </div>
+          <Box mt={5}>
+            {/*<Copyright />*/}
+          </Box>
+        </Container>
+      </React.Fragment>
+    </ThemeProvider>
   );
 }

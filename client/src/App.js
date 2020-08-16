@@ -4,6 +4,8 @@ import Jobs from './Jobs';
 import TalentMatcher from './TalentMatcher';
 import MapIndex from './MapIndex';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
 
 
 var fetch = require('node-fetch');
@@ -27,6 +29,15 @@ const JOB_API_URL = 'http://localhost:3001/jobs';
 
 // ]
 
+// const darkTheme = createMuiTheme({
+// 	palette: {
+//     	type: 'dark',
+//     	background: {
+//     		default: '#000'//palletType === 'dark' ? '#000' : '#fff' 
+//     	}
+//   	}
+// });
+
 // Call the URL programmatically
 async function fetchJobs(updateCb) {
 
@@ -49,21 +60,20 @@ function App() {
 	}, [])
 
   return (
-
-    <BrowserRouter>
-	    	<Route
-	    		exact path="/"
-	    		component={(props) => <Jobs {...props} jobs={jobList} />}
-	    	/>
-	    	<Route
-	    		exact path="/talent-matcher"
-	    		component={TalentMatcher}
-	    	/>
-	    	<Route
-	    		exact path="/map"
-	    		component={MapIndex}
-	    	/>
-    </BrowserRouter>
+	<BrowserRouter>
+    	<Route
+    		exact path="/"
+    		component={(props) => <Jobs {...props} jobs={jobList} />}
+    	/>
+    	<Route
+    		exact path="/talent-matcher"
+    		component={TalentMatcher}
+    	/>
+    	<Route
+    		exact path="/map"
+    		component={MapIndex}
+    	/>
+	</BrowserRouter>
   );
 }
 
