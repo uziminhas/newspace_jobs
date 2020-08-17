@@ -1,4 +1,5 @@
 import React from 'react';
+import { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Job from './Job';
 import JobModal from './JobModal';
@@ -30,6 +31,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useTheme } from '@material-ui/core/styles';
+import { ThemeContext} from './ThemeProvider';
+
 
 
 
@@ -94,28 +97,55 @@ const GoToMap = React.forwardRef((props, ref) => (
   <RouterLink ref={ref} to="/map" {...props} />
 ));
 
+var darkState = false;
+
 export default function Jobs({jobs}) {
 
-	const thisTheme = useTheme();
+	const setThemeName = useContext(ThemeContext);
+
+	// var thisTheme = useTheme();
+
+	// const [newState, setNewState] = React.useState(false);
+ //  	// const palletType = darkState ? "dark" : "light";
+ //  	const darkTheme = createMuiTheme({
+ //  		palette: {
+ //  	    	type: "light",
+ //  	    	background: {
+ //  	    		default: '#fff' 
+ //  	    	}
+ //  	  	}
+ //  	});
 
 
-	// Handle dark and light themes
-	const [darkState, setDarkState] = React.useState(false);
-  	const palletType = darkState ? "dark" : "light";
-  	const darkTheme = createMuiTheme({
-  		palette: {
-  	    	type: palletType,
-  	    	background: {
-  	    		default: palletType === 'dark' ? '#000' : '#fff' 
-  	    	}
-  	  	}
-  	});
+	//Handle dark and light themes
+	//const [darkState, setDarkState] = React.useState(false);
+	//var darkState = false;
+
+  	// const palletType = darkState ? "dark" : "light";
+  	// const darkTheme = createMuiTheme({
+  	// 	palette: {
+  	//     	type: palletType,
+  	//     	background: {
+  	//     		default: palletType === 'dark' ? '#000' : '#fff' 
+  	//     	}
+  	//   	}
+  	// });
+  	// const handleThemeChange = () => {
+  	// 	setDarkState(!darkState);
+  	// };
+
   	const handleThemeChange = () => {
-  		setDarkState(!darkState);
+  		darkState = !darkState;
+  		//setDarkState(!darkState);
+  		darkState === true ? setThemeName("darkTheme") : setThemeName("lightTheme");
+  		// setThemeName("darkTheme");
   	};
 
-  	const classes = useStyles();
+  	const checkTheme = () => {
+  		darkState = setThemeName === "lightTheme" ? true : false;
+  	}
 
+  	const classes = useStyles();
 
 
 	// Declares new state variable for 'filter' and sets to empty string
@@ -201,7 +231,7 @@ export default function Jobs({jobs}) {
 	console.log('active step is ', activeStep);
 
 	return (
-		<ThemeProvider theme={thisTheme}>
+		<ThemeProvider>
 		    <CssBaseline />
 
 
