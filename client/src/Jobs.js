@@ -263,7 +263,7 @@ export default function Jobs({jobs}) {
 		            SIGN UP FOR TALENT MATCHING
 		          </Link>
 		          <Link variant="button" color="textPrimary" component={GoToMap} className={classes.link}>
-		            SUBMIT AN OPPORTUNITY
+		            GO TO WORLD MAP
 		          </Link>
 		          <Link variant="button" color="textPrimary" href="#" className={classes.link}>
 		            ABOUT US

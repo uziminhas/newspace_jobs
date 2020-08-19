@@ -112,8 +112,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const LinkBehavior = React.forwardRef((props, ref) => (
+const GoToHome = React.forwardRef((props, ref) => (
   <RouterLink ref={ref} to="/" {...props} />
+));
+
+const GoToMap = React.forwardRef((props, ref) => (
+  <RouterLink ref={ref} to="/map" {...props} />
 ));
 
 const roles = [
@@ -257,11 +261,11 @@ export default function SignUp() {
               label="ENABLE SPACE MODE"
             />*/}
             <nav>
-              <Link variant="button" color="textPrimary" component={LinkBehavior} className={classes.link}>
+              <Link variant="button" color="textPrimary" component={GoToHome} className={classes.link}>
                 RETURN HOME
               </Link>
-              <Link variant="button" color="textPrimary" href="/talent-matcher" className={classes.link}>
-                SUBMIT AN OPPORTUNITY
+              <Link variant="button" color="textPrimary" component={GoToMap} className={classes.link}>
+                GO TO WORLD MAP
               </Link>
               <Link variant="button" color="textPrimary" href="#" className={classes.link}>
                 ABOUT US
