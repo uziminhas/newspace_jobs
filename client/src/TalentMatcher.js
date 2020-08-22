@@ -358,7 +358,7 @@ export default function SignUp() {
                         </MenuItem>
                       ))}
                     </Select>
-                    {state.roleError && <FormHelperText>Please select an occupation</FormHelperText>}
+                    {state.roleError && <FormHelperText>Please select an occupation / job</FormHelperText>}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
